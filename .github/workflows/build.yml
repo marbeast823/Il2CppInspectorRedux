@@ -1,10 +1,11 @@
-	name: Il2CppInspectorRedux Build
- on:
+name: Il2CppInspectorRedux Build
+ 
+on:
   push:
     branches: [ master ]
- 
   workflow_dispatch:
- jobs:
+ 
+jobs:
   build:
     runs-on: windows-latest
  
@@ -20,11 +21,11 @@
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
-              ${{ runner.os }}-nuget-
+            ${{ runner.os }}-nuget-
  
       - name: Restore NuGet packages
         run: nuget restore
-      
+ 
       - name: Build GUI
         run: msbuild /t:Il2CppInspector_GUI:publish /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFramework=net8.0-windows /p:SelfContained=false /verbosity:minimal
  
@@ -48,7 +49,7 @@
           path: Il2CppInspector.GUI/bin/Release/net8.0-windows/win-x64/publish
  
       - name: Upload CLI Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Il2CppInspectorRedux.CLI
           path: Il2CppInspector.CLI/bin/Release/net8.0/win-x64/publish
